@@ -28,18 +28,8 @@ public class Main {
             reader = new EleXplFileReader(args[0]);
         }
 
-        try {
-            String dataString = reader.readString();
-
-            int orderId = StringUtils.extractOrderID(dataString.substring(0, dataString.indexOf("\n")));
-            int date = DateUtils.getOrderDate();
-            String dateAndOrderId = String.format("%05d%04d", date, orderId);
-
-            try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(args[1]), "GBK")) {
-                writer.write(dataString + dateAndOrderId);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(args[1]), "GBK")) {
+            writer.write(reader.readString());
         } catch (IOException e) {
             e.printStackTrace();
         }
