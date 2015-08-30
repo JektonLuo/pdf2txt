@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 /**
- * Created by Jekton on 8/15/2015.
+ * @author Jekton
  */
 public class Main {
     public static void main(String[] args) {

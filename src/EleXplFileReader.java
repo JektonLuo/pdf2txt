@@ -1,5 +1,6 @@
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -29,8 +30,12 @@ public class EleXplFileReader implements Readable{
                 .replaceAll("\u0001", "")
                 .replaceAll("\0", "")
                 .replaceAll("\u001D", "")
-                .replaceAll("&[^&;\\n]*;", "");
-        stringContent = stringContent.substring(0, stringContent.length() - 1).trim();
+                .replaceAll("&[^&;\\n]*;", "")
+                .replaceAll("\u001B", "")
+                .replaceAll("\b", "")
+                .replaceAll("\u0010", "")
+                .replaceAll("\u0018", "");
+        stringContent = stringContent.trim().substring(0, stringContent.length() - 2).trim();
         inputStream.close();
 
         return stringContent;
@@ -39,7 +44,11 @@ public class EleXplFileReader implements Readable{
 
 
     public static void main(String[] args) throws IOException {
-        EleXplFileReader reader = new EleXplFileReader("E:/test/spl/test.spl");
-        System.out.println(reader.readString());
+        EleXplFileReader reader = new EleXplFileReader("E:\\myWorkspace\\test\\PRINTERS\\00010.SPL");
+        FileOutputStream out = new FileOutputStream("E:\\myWorkspace\\test\\out.txt");
+        out.write(reader.readString().getBytes());
+        out.flush();
+        out.close();
+//        System.out.println(reader.readString());
     }
 }
